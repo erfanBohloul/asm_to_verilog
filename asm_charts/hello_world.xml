@@ -1,0 +1,15 @@
+<asm_chart name="hello_world">
+
+    <states>
+        <state id="s0">
+            <instructions>
+                <print format="Hello World!"/>
+            </instructions>
+        </state>
+    </states>
+
+    <transitions>
+        <transition from="s0" to="s0"/>
+    </transitions>
+
+</asm_chart>

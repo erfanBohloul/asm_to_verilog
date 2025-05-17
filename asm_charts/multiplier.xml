@@ -1,0 +1,82 @@
+
+<asm_chart name="multiplier">
+
+  <variables>
+    <variable id="R1" bitwidth="8"/>
+    <variable id="R2" bitwidth="8"/>
+    <variable id="R3" bitwidth="8"/>
+    <variable id="R4" bitwidth="8" type="output"/>
+    <variable id="Re" bitwidth="1" type="output"/>
+    <variable id="in1" bitwidth="8" type="input" datatype="wire"/>
+    <variable id="in2" bitwidth="8" type="input" datatype="wire"/>
+    <variable id="s" bitwidth="1" type="input"/>
+  </variables>
+
+  <!-- State Boxes -->
+  <states>
+    <state id="s0" ></state>
+    <state id="s1" ></state>
+  </states>
+  
+  <!-- Decision Boxes -->
+  <decisions>
+    <decision id="d0" condition="s == 1"/>
+    <decision id="d1" condition="R1 != 0"/>
+    <decision id="d2" condition="R1 &amp; 1"/>
+  </decisions>
+  
+  <!-- Conditional Blocks (formerly conditional_outputs) -->
+  <conditionals>
+    <conditional id="c0">
+      <instructions>
+        <assign target="R1" value="in1"/>
+        <assign target="R2" value="in2"/>
+        <assign target="R3" value="0"/>
+        <assign target="Re" value="0"/>
+        <assign target="R4" value="0"/>
+      </instructions>
+    </conditional>
+
+    <conditional id="c1">
+      <instructions>
+        <assign target="R2" value="R2 &lt;&lt; 1"/>
+        <assign target="R1" value="R1 &gt;&gt; 1"/>
+      </instructions>
+    </conditional>
+
+    <conditional id="c2">
+      <instructions>
+        <assign target="R3" value="R3 + R2"/>
+      </instructions>
+    </conditional>
+
+    <conditional id="c3">
+      <instructions>
+        <assign target="R4" value="R3"/>
+        <assign target="Re" value="1"/>
+      </instructions>
+    </conditional>
+
+  </conditionals>
+  
+  <!-- Transitions -->
+  <transitions>
+
+    <transition from="s0" to="d0"/>
+      <transition from="d0" to="c0" when="true"/>
+        <transition from="c0" to="s1"/>
+      <transition from="d0" to="s0" when="false"/>
+    
+
+    <transition from="s1" to="d1"/>
+      <transition from="d1" to="c1" when="true"/>
+        <transition from="c1" to="d2"/>
+          <transition from="d2" to="c2" when="true"/>
+            <transition from="c2" to="s1"/>
+          <transition from="d2" to="s1" when="false"/>
+
+      <transition from="d1" to="c3" when="false"/>
+        <transition from="c3" to="s0"/>
+
+  </transitions>
+</asm_chart>
