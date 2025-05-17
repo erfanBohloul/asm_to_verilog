@@ -1,0 +1,1 @@
+This project converts Algorithmic State Machine (ASM) charts described in XML format into synthesizable Verilog code. It automatically generates finite state machines (FSMs) with proper state transitions, combinational logic, and registered outputs.
